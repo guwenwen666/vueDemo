@@ -18,7 +18,9 @@ const env = process.env.NODE_ENV === 'testing'
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
+      // production 下生成 sourceMap
       sourceMap: config.build.productionSourceMap,
+      // util 中 styleLoaders 方法内的 generateLoaders 函数
       extract: true,
       usePostCSS: true
     })
@@ -44,6 +46,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       parallel: true
     }),
     // extract css into its own file
+    //提取js中的css
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
       // Setting the following option to `false` will not extract CSS from codesplit chunks.
@@ -54,6 +57,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
+    //压缩提取出的css
     new OptimizeCSSPlugin({
       cssProcessorOptions: config.build.productionSourceMap
         ? { safe: true, map: { inline: false } }
@@ -62,6 +66,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
+    //生成html
     new HtmlWebpackPlugin({
       filename: process.env.NODE_ENV === 'testing'
         ? 'index.html'
@@ -76,13 +81,15 @@ const webpackConfig = merge(baseWebpackConfig, {
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'dependency'//按dependency的顺序引入
     }),
     // keep module.id stable when vendor modules does not change
-    new webpack.HashedModuleIdsPlugin(),
+    new webpack.HashedModuleIdsPlugin(),// 根据模块的相对路径生成一个四位数的 hash 作为模块 id
     // enable scope hoisting
+    // 预编译所有模块到一个闭包中
     new webpack.optimize.ModuleConcatenationPlugin(),
     // split vendor js into its own file
+    //拆分公共模块
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks (module) {
@@ -113,6 +120,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
 
     // copy custom static assets
+    //拷贝静态文档
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../static'),
@@ -123,7 +131,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   ]
 })
 
-if (config.build.productionGzip) {
+if (config.build.productionGzip) {//gzip压缩
   const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
   webpackConfig.plugins.push(
@@ -135,13 +143,13 @@ if (config.build.productionGzip) {
         config.build.productionGzipExtensions.join('|') +
         ')$'
       ),
-      threshold: 10240,
-      minRatio: 0.8
+      threshold: 10240,//10kb以上的文件才压缩
+      minRatio: 0.8//最小比例达到0.8时才压缩
     })
   )
 }
 
-if (config.build.bundleAnalyzerReport) {
+if (config.build.bundleAnalyzerReport) {//可视化分析报的尺寸
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
