@@ -7,7 +7,11 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      msg: "Welcome to Your Vue.js App",
+      obj:{
+        name:'gww',
+        age:20
+      }
     };
   },
   methods: {
@@ -60,6 +64,39 @@ export default {
     reverse(){
       var arr = [1,3,56];
       console.log(arr.reverse());
+    },
+    doObj(){
+      var xiaoming = {
+        name:"小明",
+        hobby:"游泳",
+        city:"shanghai"
+      };
+      console.log(xiaoming.name);
+      console.log(xiaoming.age);
+      console.log(xiaoming['name']);
+      xiaoming.age = 18;
+      console.log(xiaoming.age);
+      delete xiaoming.age;//删除属性
+      delete xiaoming['name'];
+      console.log(xiaoming);
+      //in 判断小明拥有的属性
+      console.log('hobby' in xiaoming);
+      console.log('toString' in xiaoming);//继承得到
+      console.log(xiaoming.hasOwnProperty('name'));
+      console.log(xiaoming.hasOwnProperty('hobby'));
+      console.log(xiaoming.hasOwnProperty('toString'));
+      //遍历对象
+      for(var key in this.obj){
+        console.log("key=====",key);
+      }
+    },
+    doMap(){
+      console.log("map=======================");
+      var m = new Map();
+      m.set('gww',100);
+      m.set('gbl',98);
+      m.set('gyy',80);
+      console.log(m);
     }
   },
   mounted() {
@@ -77,6 +114,10 @@ export default {
     this.sort();
     //调序
     this.reverse();
+    //对象
+    this.doObj();
+    //map
+    this.doMap();
   }
 };
 </script>
