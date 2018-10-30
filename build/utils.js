@@ -28,7 +28,7 @@ exports.cssLoaders = function (options) {
       sourceMap: options.sourceMap
     }
   }
-
+  //生成loader
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
@@ -36,7 +36,7 @@ exports.cssLoaders = function (options) {
     if (loader) {
       loaders.push({
         loader: loader + '-loader',
-        options: Object.assign({}, loaderOptions, {
+        options: Object.assign({}, loaderOptions, {//生成options对象
           sourceMap: options.sourceMap
         })
       })
@@ -44,6 +44,7 @@ exports.cssLoaders = function (options) {
 
     // Extract CSS when that option is specified
     // (which is the case during production build)
+    //生产模式中提取css
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
@@ -55,6 +56,7 @@ exports.cssLoaders = function (options) {
   }
 
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
+  //返回各种loaders对象
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
@@ -82,8 +84,9 @@ exports.styleLoaders = function (options) {
   return output
 }
 
-exports.createNotifierCallback = () => {
-  const notifier = require('node-notifier')
+exports.createNotifierCallback = () => {//配合 friendly-errors-webpack-plugin
+  //// 基本用法：notifier.notify('message');
+  const notifier = require('node-notifier')//发送跨平台通知系统
 
   return (severity, errors) => {
     if (severity !== 'error') return
