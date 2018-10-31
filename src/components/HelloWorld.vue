@@ -1,4 +1,5 @@
 <template>
+
  
 </template>
 
@@ -8,9 +9,9 @@ export default {
   data() {
     return {
       msg: "Welcome to Your Vue.js App",
-      obj:{
-        name:'gww',
-        age:20
+      obj: {
+        name: "gww",
+        age: 20
       }
     };
   },
@@ -59,44 +60,93 @@ export default {
       arr3.sort(function(a, b) {
         return a - b;
       });
-      console.log("原数组"+["11", "5", "75", "23", "54", "2", "1"],arr3); 
+      console.log("原数组" + ["11", "5", "75", "23", "54", "2", "1"], arr3);
     },
-    reverse(){
-      var arr = [1,3,56];
+    reverse() {
+      var arr = [1, 3, 56];
       console.log(arr.reverse());
     },
-    doObj(){
+    doObj() {
       var xiaoming = {
-        name:"小明",
-        hobby:"游泳",
-        city:"shanghai"
+        name: "小明",
+        hobby: "游泳",
+        city: "shanghai"
       };
       console.log(xiaoming.name);
       console.log(xiaoming.age);
-      console.log(xiaoming['name']);
+      console.log(xiaoming["name"]);
       xiaoming.age = 18;
       console.log(xiaoming.age);
-      delete xiaoming.age;//删除属性
-      delete xiaoming['name'];
+      delete xiaoming.age; //删除属性
+      delete xiaoming["name"];
       console.log(xiaoming);
       //in 判断小明拥有的属性
-      console.log('hobby' in xiaoming);
-      console.log('toString' in xiaoming);//继承得到
-      console.log(xiaoming.hasOwnProperty('name'));
-      console.log(xiaoming.hasOwnProperty('hobby'));
-      console.log(xiaoming.hasOwnProperty('toString'));
+      console.log("hobby" in xiaoming);
+      console.log("toString" in xiaoming); //继承得到
+      console.log(xiaoming.hasOwnProperty("name"));
+      console.log(xiaoming.hasOwnProperty("hobby"));
+      console.log(xiaoming.hasOwnProperty("toString"));
       //遍历对象
-      for(var key in this.obj){
-        console.log("key=====",key);
+      for (var key in this.obj) {
+        console.log("key=====", key);
       }
     },
-    doMap(){
+    doMap() {
       console.log("map=======================");
       var m = new Map();
-      m.set('gww',100);
-      m.set('gbl',98);
-      m.set('gyy',80);
+      m.set("gww", 100);
+      m.set("gbl", 98);
+      m.set("gyy", 80);
       console.log(m);
+      console.log(m.get("gww"));
+      console.log(m.has("gbl"));
+    },
+    doSet() {
+      console.log("set=====================");
+      var s1 = new Set(["A", "a", "A", "B"]);
+      console.log(s1);
+      var s2 = new Set();
+      s2.add("uu");
+      s2.add("mm");
+      s2.add("mm");
+      console.log(s2, s2.has("mm"));
+    },
+    doForOf() {
+      var arr = [1, 5, 6, 7, "p"];
+      var map = new Map([["A", "aaa"], ["B", "bbb"], ["C", "ccc"]]);
+      var set = new Set([1, 5, 6, 7, "p"]);
+      for (var x of arr) {
+        console.log("arr", x);
+      }
+      for (var x of map) {
+        console.log("map" + x[0], x[1]);
+      }
+      for (var x of set) {
+        console.log("set", x);
+      }
+      console.log("foreach======================");
+      arr.forEach(function(element, index, array) {
+        console.log(element);
+        console.log(index);
+        console.log(array);
+      });
+      set.forEach(function(element, index, set) {
+        console.log(element);
+        console.log(index);
+        console.log(set);
+      });
+      map.forEach(function(element, index, map) {
+        console.log(element);
+        console.log(index);
+        console.log(map);
+      });
+    },
+    doSum(...rest) {
+      console.log(...rest);
+      console.log("window", window);
+      var _alert = window.alert;
+      alert('hhh');
+      _alert('hhhh');
     }
   },
   mounted() {
@@ -118,6 +168,13 @@ export default {
     this.doObj();
     //map
     this.doMap();
+    //set
+    this.doSet();
+    //for..of
+    this.doForOf();
+    this.doSum(1);
+    this.doSum(1, 2);
+    // window.alert('hh');
   }
 };
 </script>
