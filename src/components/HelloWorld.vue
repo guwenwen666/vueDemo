@@ -12,6 +12,14 @@ export default {
       obj: {
         name: "gww",
         age: 20
+      },
+      xiaoming: {
+        name: "小明",
+        birth: 1990,
+        age: function() {
+          var y = new Date().getFullYear();
+          return y - this.birth;
+        }
       }
     };
   },
@@ -145,8 +153,35 @@ export default {
       console.log(...rest);
       console.log("window", window);
       var _alert = window.alert;
-      alert('hhh');
-      _alert('hhhh');
+      // alert('hhh');
+      // _alert('hhhh');
+    },
+    varLetI() {
+      for (var i = 0; i < 100; i++) {}
+      alert("var" + i);
+      for (let j = 0; j < 100; j++) {}
+      // alert("let"+j);//报错j is not defined
+    },
+    doFz() {
+      var [x, y, z] = ["1", "2", "3"];
+      console.log("x=" + x, "y=" + y, "z=" + z);
+      let [, , zz] = [, , "zz"];
+      alert(zz);
+      let [xx, [yy, zzz]] = ["hello", ["JavaScript", "ES6"]];
+      console.log("x=" + xx, "y=" + yy, "z=" + zzz);
+      var person = {
+        name: "小明",
+        age: 20,
+        gender: "male",
+        passport: "G-12345678",
+        school: "No.4 middle school"
+      };
+      var { name, age, passport } = person;
+      // name, age, passport分别被赋值为对应属性:
+      console.log(
+        "name = " + name + ", age = " + age + ", passport = " + passport
+      );
+      alert(this.xiaoming.age());
     }
   },
   mounted() {
@@ -175,6 +210,9 @@ export default {
     this.doSum(1);
     this.doSum(1, 2);
     // window.alert('hh');
+    this.varLetI();
+    //解构赋值
+    this.doFz();
   }
 };
 </script>
